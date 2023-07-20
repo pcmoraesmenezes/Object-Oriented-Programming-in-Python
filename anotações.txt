@@ -1,0 +1,149 @@
+Modulo 5:
+Classes são moldes para se criar novos objetos. Podem ter sesus proprios atributos ou metodos
+Os objetos gerados pela classe podem usar seus dados internos para realizar diversas ações 
+Utilizamos PascalCase para se referir a classes
+para se criar uma classe utiliza-se class NomeDaClasse:
+                                    ...
+Para instanciar uma variavel com os metodos de uma classe utiliza-se Teste = NomeDaClasse()
+
+#Python não tem modificadores de acesso
+#Mas existe algumas convenções sobre.
+# Se não utilizarmos o underline, então é public
+# Se utilizarmos apenas um underline é protected  -> Não pode ser usado fora da classe ou da subclasse
+# Se utilizarmos dois underlines é private -> Só pode ser usado na classe que foi declarado
+
+Relações entre classes: Associação, agregação e composição
+
+Associação é um tipo de relação onde os objetos estão ligados dentro do sistema
+Essa é a relação mais comum entre objetos e tem subconjuntos como agregação e composição
+Geralmente temos uma associação quando um objeto tem um atributo que referencia outro objeto
+A associação não especifica como um objeto controla o ciclo de vida de outro objeto
+
+Agregação é uma forma especializada de associação entre dois ou mais objetos. Cada objeto terá seu ciclo de vida independente
+Geralmente é uma relação de um para muitos, o que significa que um objeto tem um ou mais objetos
+Os objetos podem viver separadamente, mas pode se tratar de uma relação em que um objeto precisa do outro para uma determinada tarefa.
+
+Composição é uma especialização da agregação.
+Mas nela, quando o objeto pai for apagado, todas as referências dos objetos filhos também são apagados
+
+MRO - Metod relevant order - Ordem de execução dos metodos
+Para se descobrir a ordem de execução de metodos, pode-se utilizar mro, ele exibirá em forma de tupla se usado o comando print(metodo.__mro__)
+Ou então exibirá em forma de lista se utiliazdo do metodo print(metodo.mro())
+
+ABC - Abstract Base Class 
+Usadas como contrato para a definição de novas classes. Elas podem forçar as classes a criarem metodos concretos. Também podem ter metodos concretos por elas mesmas 
+Abstract methods são metodos que não tem corpo. Classes abstratas com metodos abstratos não podem se instancair diretamente. Metodos abstratos devem ser implementados na subclasse 
+Uma classe abstrata tem sua metaclasse como sendo ABCMeta
+É possível criar @property @setter @classmethod @staticmethod e @method como abstratos para isso use @abstractmethod como decorador mais interno
+
+Polimorfismo - Principio que permite que classes derivadas de uma superclasse tenham metodos iguais, mas com comportamento diferetne 
+
+DunderMethods:
+Metodos seguidos por dois underscore, ex __init__
+A ideia por trás do método __repr__ é fornecer uma representação mais detalhada e precisa do objeto, geralmente incluindo informações suficientes para identificar completament
+ o objeto e seu estado interno.
+ # Exemplo de uso de dunder methods (métodos mágicos)
+# __lt__(self,other) - self < other #less than
+# __le__(self,other) - self <= other #less equal then 
+# __gt__(self,other) - self > other #greater then 
+# __ge__(self,other) - self >= other #greater equal then 
+# __eq__(self,other) - self == other #equal 
+# __ne__(self,other) - self != other 
+# __add__(self,other) - self + other
+# __sub__(self,other) - self - other
+# __mul__(self,other) - self * other
+# __truediv__(self,other) - self / other
+# __neg__(self) - -self
+# __str__(self) - str
+# __repr__(self) - str 
+
+# __new__ e __init__ em classes Python
+# __new__ é o método responsável por criar e
+# retornar o novo objeto. Por isso, new recebe cls.
+# __new__ ❗️DEVE retornar o novo objeto❗️
+# __init__ é o método responsável por inicializar
+# a instância. Por isso, init recebe self.
+# __init__ ❗️NÃO DEVE retornar nada (None)❗️
+# object é a super classe de uma classe
+
+# Context Manager com classes - Criando e Usando gerenciadores de contexto
+# Você pode implementar seus próprios protocolos
+# apenas implementando os dunder methods que o
+# Python vai usar.
+# Isso é chamado de Duck typing. Um conceito
+# relacionado com tipagem dinâmica onde o Python não
+# está interessado no tipo, mas se alguns métodos existem
+# no seu objeto para que ele funcione de forma adequada.
+# Duck Typing:
+# Quando vejo um pássaro que caminha como um pato, nada como
+# um pato e grasna como um pato, eu chamo aquele pássaro de pato.
+# Para criar um context manager, os métodos __enter__ e __exit__
+# devem ser implementados.
+# O método __exit__ receberá a classe de exceção, a exceção e o
+# traceback. Se ele retornar True, exceção no with será
+# suprimidas.
+#
+# Ex:
+# with open('aula149.txt', 'w') as arquivo:
+#     ...
+
+# Metaclasses são o tipo das classes
+# EM PYTHON, TUDO É UM OBJETO (CLASSES TAMBÉM)
+# Então, qual é o tipo de uma classe? (type)
+# Seu objeto é uma instância da sua classe
+# Sua classe é uma instância de type (type é uma metaclass)
+# type('Name', (Bases,), __dict__)
+#
+# Ao criar uma classe, coisas ocorrem por padrão nessa ordem:
+# __new__ da metaclass é chamado e cria a nova classe
+# __call__ da metaclass é chamado com os argumentos e chama:
+#   __new__ da class com os argumentos (cria a instância)
+#   __init__ da class com os argumentos
+# __call__ da metaclass termina a execução
+#
+# Métodos importantes da metaclass
+# __new__(mcs, name, bases, dct) (Cria a classe)
+# __call__(cls, *args, **kwargs) (Cria e inicializa a instância)
+#
+# "Metaclasses são magias mais profundas do que 99% dos usuários
+# deveriam se preocupar. Se você quer saber se precisa delas,
+# não precisa (as pessoas que realmente precisam delas sabem
+# com certeza que precisam delas e não precisam de uma explicação
+# sobre o porquê)."
+# — Tim Peters (CPython Core Developer)
+
+
+# Enum -> Enumerações
+# Enumerações na programação, são usadas em ocasiões onde temos
+# um determinado número de coisas para escolher.
+# Enums têm membros e seus valores são constantes.
+# Enums em python:
+#   - são um conjunto de nomes simbólicos (membros) ligados a valores únicos
+#   - podem ser iterados para retornar seus membros canônicos na ordem de
+#       definição
+# enum.Enum é a superclasse para suas enumerações. Mas também pode ser usada
+#   diretamente (mesmo assim, Enums não são classes normais em Python).
+# Você poderá usar seu Enum com type annotations, com isinstance e
+# outras coisas relacionadas com tipo.
+# Para obter os dados:
+# membro = Classe(valor), Classe['chave']
+# chave = Classe.chave.name
+# valor = Classe.chave.value
+
+# dataclasses - O que são dataclasses?
+# O módulo dataclasses fornece um decorador e funções para criar métodos como
+# __init__(), __repr__(), __eq__() (entre outros) em classes definidas pelo
+# usuário.
+# Em resumo: dataclasses são syntax sugar para criar classes normais.
+# Foi descrito na PEP 557 e adicionado na versão 3.7 do Python.
+# doc: https://docs.python.org/3/library/dataclasses.html
+
+# namedtuples - tuplas imutáveis com nomes para valores
+# Usamos namedtuples para criar classes de objetos que são apenas um
+# agrupamento de atributos, como classes normais sem métodos, ou registros de
+# bases de dados, etc.
+# As namedtuples são imutáveis assim como as tuplas.
+# https://docs.python.org/3/library/collections.html#collections.namedtuple
+# https://docs.python.org/3/library/typing.html#typing.NamedTuple
+# https://brasilescola.uol.com.br/curiosidades/baralho.htm
+# from collections import namedtuple
